@@ -1,17 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import Card from './components/Card'
+import { roles } from './classes/Role'
 
 function App() {
+  const arrayDataItems = roles.map((role) => <li> <Card roleName={role.name} description={role.description} img={role.img} /></li>);
   return (
-    <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-      <div class="shrink-0">
-        <img src={logo} className="App-logo" alt="logo" />
+    <>
+      <div class="bg-gradient-to-b from-indigo-800 to-blue-950 min-h-full">
+        <ul class="list-none">{arrayDataItems}</ul>
       </div>
-      <div>
-        <div class="text-xl font-medium text-black">ChitChat</div>
-        <p class="text-slate-500">You have a new message!</p>
-      </div>
-    </div>
+    </>
   );
 }
 
