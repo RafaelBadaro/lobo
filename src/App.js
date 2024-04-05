@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { basic_game_roles } from './classes/Role';
 import { players } from './engine/Game';
 import Main from './engine/Main'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [playersArr, setPlayersArr] = useState(players);
@@ -42,7 +43,7 @@ function App() {
           </li>
         ))}
       </ul> */}
-      <Main />
+      <Outlet />
     </div>
   );
 }

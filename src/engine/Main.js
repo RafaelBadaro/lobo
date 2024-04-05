@@ -1,17 +1,19 @@
 
 import { db } from './Firebase';
-import { collection, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, setDoc, doc, where, query } from "firebase/firestore";
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 function Main() {
-
     const [inputValue, setInputValue] = useState('');
     const [isJoinRoomBtnEnabled, setJoinRoomBtnEnabled] = useState(false);
+
+    const navigate = useNavigate()
 
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
-        setJoinRoomBtnEnabled(value.length == 4);
+        setJoinRoomBtnEnabled(value.length === 4);
     };
 
     const createRoom = async (e) => {
@@ -30,7 +32,7 @@ function Main() {
 
     };
 
-    const joinRoom = () => {
+    const joinRoom = async () => {
 
         const roomCode = document.getElementById('roomCode').value
         if (roomCode === "" || roomCode == null) {
@@ -38,11 +40,18 @@ function Main() {
             return
         }
 
-        debugger
-        const room = doc(db, "rooms", roomCode);
-        if(room != null){
-            // Redirect to room page
-        } else{
+        const q = query(collection(db, "rooms"), where("code", "==", roomCode))
+        const querySnapshot = await getDocs(q);
+        var room = null;
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            room = doc.data()
+            console.log(doc.id, " => ", doc.data());
+        });
+
+        if (room != null) {
+            navigate("room")
+        } else {
             // Send message room not found
         }
 
@@ -92,14 +101,12 @@ function Main() {
                     Entrar em uma sala
                 </button>
 
-
                 <button
                     class="my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={createRoom}>
                     Criar uma sala
                 </button>
             </div>
-
         </div>
     );
 }
