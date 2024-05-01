@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Room from './Views/Room';
+import Rules from './Views/Rules';
 import Main from './engine/Main';
 
 const router = createBrowserRouter([
@@ -17,8 +18,12 @@ const router = createBrowserRouter([
         element: <Main />
       },
       {
-        path: "room",
+        path: "room/:id",
         element: <Room />
+      },
+      {
+        path: "rules",
+        element: <Rules />
       }
     ]
   },

@@ -22,10 +22,14 @@ function Main() {
             const docRef = await addDoc(collection(db, "rooms"), {
                 players: [],
             });
+            const roomCode = docRef.id.substring(0, 4).toUpperCase()// the code of the room will be the 4 digits of the ID
             setDoc(docRef, {
-                code: docRef.id.substring(0, 4).toUpperCase() // the code of the room will be the 4 digits of the ID
+                code: roomCode 
             }, { merge: true });
             console.log("Document written with ID: ", docRef.id);
+            //TODO colocar um MODAL aqui pra pedir um nome pro usuario
+            const nameFromModal = "testNarrador"
+            navigate(`/room/${roomCode}`,{state:{code: roomCode, type: "narrador", name: {nameFromModal}}});
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -50,11 +54,17 @@ function Main() {
         });
 
         if (room != null) {
-            navigate("room")
+            //TODO colocar um MODAL aqui pra pedir um nome pro usuario
+            const nameFromModal = "testPlayer"
+            navigate(`/room/${roomCode}`,{state:{code: roomCode, type: "player", name: {nameFromModal}}});
         } else {
-            // Send message room not found
+            //TODO Send message room not found
         }
 
+    }
+
+    const rulesOfTheGame = async () => {
+        navigate("rules")
     }
 
     return (
@@ -105,6 +115,12 @@ function Main() {
                     class="my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={createRoom}>
                     Criar uma sala
+                </button>
+
+                <button
+                    class="my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={rulesOfTheGame}>
+                    Regras do jogo
                 </button>
             </div>
         </div>

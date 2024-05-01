@@ -1,6 +1,6 @@
 import { basic_game_roles } from '../classes/Role'
-
 import { Player } from '../classes/Player'
+
 /*
     O minimo pra ter um jogo é:
 
@@ -16,9 +16,6 @@ import { Player } from '../classes/Player'
 */
 
 // TODO - deixar o jogo ser customizavel no futuro
-
-// Creates temp array to play
-const game_roles = basic_game_roles
 
 export const players = [
     new Player("zezin1", null, "player"), // 0
